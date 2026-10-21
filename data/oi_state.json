@@ -37,7 +37,7 @@
       "distance_to_pivot_pct": -1.0
     },
     "entry_time": "2026-10-21T11:35:51.811597+05:30",
-    "last_updated": "2026-10-21T15:21:45.703525+05:30"
+    "last_updated": "2026-10-21T15:22:58.385660+05:30"
   },
   "nifty50": {
     "price": "22806.0500",
@@ -46,7 +46,7 @@
     "direction": "NA"
   },
   "market_score": 9.02,
-  "timestamp": "2026-10-21T15:21:45.725689+05:30",
+  "timestamp": "2026-10-21T15:22:58.388658+05:30",
   "total_completed_picks": 0,
   "active_picks": [
     {
@@ -87,7 +87,7 @@
         "distance_to_pivot_pct": -1.0
       },
       "entry_time": "2026-10-21T11:35:51.811597+05:30",
-      "last_updated": "2026-10-21T15:21:45.703525+05:30"
+      "last_updated": "2026-10-21T15:22:58.385660+05:30"
     },
     {
       "symbol": "ASIANPAINT",
@@ -127,7 +127,7 @@
         "distance_to_pivot_pct": -0.1
       },
       "entry_time": "2026-10-21T15:19:18.758506+05:30",
-      "last_updated": "2026-10-21T15:21:45.703525+05:30"
+      "last_updated": "2026-10-21T15:22:58.385660+05:30"
     },
     {
       "symbol": "ATHERENERG",
@@ -167,7 +167,7 @@
         "distance_to_pivot_pct": -2.48
       },
       "entry_time": "2026-10-21T15:19:18.758506+05:30",
-      "last_updated": "2026-10-21T15:21:45.703525+05:30"
+      "last_updated": "2026-10-21T15:22:58.385660+05:30"
     },
     {
       "symbol": "POWERINDIA",
@@ -207,7 +207,7 @@
         "distance_to_pivot_pct": -3.26
       },
       "entry_time": "2026-10-21T15:19:18.758506+05:30",
-      "last_updated": "2026-10-21T15:21:45.703525+05:30"
+      "last_updated": "2026-10-21T15:22:58.385660+05:30"
     },
     {
       "symbol": "PRESTIGE",
@@ -247,7 +247,7 @@
         "distance_to_pivot_pct": -3.0
       },
       "entry_time": "2026-10-21T15:19:18.758506+05:30",
-      "last_updated": "2026-10-21T15:21:45.703525+05:30"
+      "last_updated": "2026-10-21T15:22:58.385660+05:30"
     }
   ]
 }
