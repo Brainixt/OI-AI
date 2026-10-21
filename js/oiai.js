@@ -1,32 +1,19 @@
 /**
  * OI-AI: Client Runtime Engine (Zero Loading Delay)
- * 2 Signals on 1-Min Gap: OI Score * Market Score >= 90
- * Dynamic ATR Swing Model | Exactly 1 Active Share
+ * Max 5 Active Shares Concurrently | 2-Signal OI Velocity * Market Score >= 90
+ * Dynamic Swing Model (Target ~1.5%-2.0%, SL 0.5%-1.5%, min 1:2.0 R:R)
  */
 
 const SCAN_INTERVAL_SEC = 60;
-const STORAGE_ACTIVE_PICK = "oiai_active_pick";
-const STORAGE_HISTORY = "oiai_history";
+const STORAGE_STATE = "oiai_state";
 
 let appState = {
-  activePick: null,
+  activePicks: [],
   history: [],
-  nifty: { price: "22,980.00", change: "+90.00", change_percent: "+0.39%" },
+  nifty: { price: "22,887.95", change: "+0.00", change_percent: "+0.00%" },
   countdown: SCAN_INTERVAL_SEC,
   isScanning: false,
   timerInterval: null
-};
-
-const fmtRupee = (val) => {
-  if (val === null || val === undefined || isNaN(val)) return "₹ --";
-  return "₹ " + Number(val).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-};
-
-const fmtPct = (val) => {
-  if (val === null || val === undefined || isNaN(val)) return "--";
-  const num = Number(val);
-  const sign = num > 0 ? "+" : "";
-  return `${sign}${num.toFixed(2)}%`;
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -52,71 +39,50 @@ function startClock() {
 }
 
 function loadPersistedData() {
-  // 1. Instant Embedded Initial State
-  if (window.OI_INITIAL_STATE && window.OI_INITIAL_STATE.active_pick) {
-    appState.activePick = window.OI_INITIAL_STATE.active_pick;
-    if (window.OI_INITIAL_STATE.nifty50) {
-      appState.nifty = window.OI_INITIAL_STATE.nifty50;
-      renderNiftyTicker(appState.nifty);
-    }
+  if (window.OI_INITIAL_STATE) {
+    applyState(window.OI_INITIAL_STATE);
   }
 
-  // 2. LocalStorage override if fresh
   try {
-    const savedActive = localStorage.getItem(STORAGE_ACTIVE_PICK);
-    if (savedActive) {
-      const parsed = JSON.parse(savedActive);
-      if (parsed && parsed.symbol) appState.activePick = parsed;
+    const saved = localStorage.getItem(STORAGE_STATE);
+    if (saved) {
+      applyState(JSON.parse(saved));
     }
-  } catch (e) {}
-
-  try {
-    const savedHist = localStorage.getItem(STORAGE_HISTORY);
-    if (savedHist) appState.history = JSON.parse(savedHist);
-  } catch (e) {}
-
-  renderSpotlightCard();
-  renderHistoryTable();
-  updateSummaryMetrics();
+  } catch (e) {
+    console.warn("Could not read local storage state:", e);
+  }
 }
 
-function persistState() {
-  try {
-    if (appState.activePick) localStorage.setItem(STORAGE_ACTIVE_PICK, JSON.stringify(appState.activePick));
-    localStorage.setItem(STORAGE_HISTORY, JSON.stringify(appState.history));
-  } catch (e) {}
+function applyState(state) {
+  if (!state) return;
+  if (state.active_picks && Array.isArray(state.active_picks)) {
+    appState.activePicks = state.active_picks;
+  } else if (state.active_pick) {
+    appState.activePicks = [state.active_pick];
+  }
+
+  if (state.nifty50) {
+    appState.nifty = state.nifty50;
+    renderNiftyTicker(appState.nifty);
+  }
+
+  updatePortfolioBadge();
 }
 
 function startCountdownLoop() {
   if (appState.timerInterval) clearInterval(appState.timerInterval);
   appState.countdown = SCAN_INTERVAL_SEC;
-  const countdownEl = document.getElementById("cycleCountdown");
 
   appState.timerInterval = setInterval(() => {
     appState.countdown--;
-    if (countdownEl) countdownEl.innerText = `${appState.countdown}s`;
-    updateActiveDuration();
+    const el = document.getElementById("cycleCountdown");
+    if (el) el.innerText = `${appState.countdown}s`;
+
     if (appState.countdown <= 0) {
       appState.countdown = SCAN_INTERVAL_SEC;
       runOiScanCycle();
     }
   }, 1000);
-}
-
-function updateActiveDuration() {
-  if (!appState.activePick || !appState.activePick.entry_time) return;
-  const durationEl = document.getElementById("heroDuration");
-  if (!durationEl) return;
-  const entryDate = new Date(appState.activePick.entry_time);
-  const diffMinutes = Math.floor((new Date() - entryDate) / 60000);
-  durationEl.innerText = diffMinutes < 60 ? `${Math.max(1, diffMinutes)}m active` : `${Math.floor(diffMinutes/60)}h ${diffMinutes%60}m active`;
-}
-
-function triggerManualRefresh() {
-  appState.countdown = SCAN_INTERVAL_SEC;
-  const countdownEl = document.getElementById("cycleCountdown");
-  if (countdownEl) countdownEl.innerText = `${appState.countdown}s`;
-  runOiScanCycle();
 }
 
 async function runOiScanCycle() {
@@ -126,230 +92,220 @@ async function runOiScanCycle() {
   try {
     const resp = await fetch("data/oi_state.json?_t=" + Date.now());
     if (resp.ok) {
-      const data = await resp.json();
-      if (data.active_pick) {
-        appState.activePick = data.active_pick;
-        if (data.nifty50) {
-          appState.nifty = data.nifty50;
-          renderNiftyTicker(data.nifty50);
-        }
-        renderSpotlightCard();
-        persistState();
-      }
+      const state = await resp.json();
+      applyState(state);
+      localStorage.setItem(STORAGE_STATE, JSON.stringify(state));
+      renderActiveGrid();
+    }
+
+    const histResp = await fetch("data/oi_history.json?_t=" + Date.now());
+    if (histResp.ok) {
+      appState.history = await histResp.json();
+      renderHistoryTable();
+      updateSummaryMetrics();
     }
   } catch (e) {
+    console.warn("Background fetch error:", e);
   } finally {
     appState.isScanning = false;
   }
+}
+
+function triggerManualRefresh() {
+  appState.countdown = SCAN_INTERVAL_SEC;
+  const el = document.getElementById("cycleCountdown");
+  if (el) el.innerText = `${appState.countdown}s`;
+  runOiScanCycle();
 }
 
 function renderNiftyTicker(nifty) {
   const priceEl = document.getElementById("niftyPrice");
   const chgEl = document.getElementById("niftyChange");
   if (!priceEl || !chgEl) return;
-  const priceNum = parseFloat(nifty.price || 0);
-  const chgNum = parseFloat(nifty.change || 0);
-  const pctNum = parseFloat(nifty.change_percent || 0);
 
-  priceEl.innerText = priceNum ? priceNum.toLocaleString("en-IN", { minimumFractionDigits: 2 }) : "--";
-  chgEl.innerText = `${chgNum >= 0 ? "+" : ""}${chgNum.toFixed(2)} (${chgNum >= 0 ? "+" : ""}${pctNum.toFixed(2)}%)`;
-  chgEl.className = "ticker-chg " + (chgNum >= 0 ? "up" : "down");
+  priceEl.innerText = Number(nifty.price || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 });
+  const chgPct = parseFloat(nifty.change_percent || 0);
+  const sign = chgPct >= 0 ? "+" : "";
+  chgEl.innerText = `${sign}${nifty.change || 0} (${sign}${chgPct.toFixed(2)}%)`;
+  chgEl.className = chgPct >= 0 ? "ticker-chg up" : "ticker-chg down";
 }
 
-function renderSpotlightCard() {
-  const active = appState.activePick;
-  if (!active) return;
+function updatePortfolioBadge() {
+  const badge = document.getElementById("activeStateBadge");
+  if (!badge) return;
+  const count = appState.activePicks.length;
+  badge.innerText = `${count} / 5 POSITIONS ACTIVE`;
+  badge.className = count >= 5 ? "active-badge locked" : "active-badge scanning";
+}
 
-  const symEl = document.getElementById("heroSymbol");
-  const compEl = document.getElementById("heroCompany");
-  const entryTimeEl = document.getElementById("heroEntryTime");
-  const scoreValEl = document.getElementById("heroCombinedScore");
-  const oiScoreEl = document.getElementById("heroOiScore");
-  const mktScoreEl = document.getElementById("heroMarketScore");
-  const sigTwoMinEl = document.getElementById("heroSignalTwoMin");
-  const epEl = document.getElementById("heroEntryPrice");
-  const cpEl = document.getElementById("heroCurrentPrice");
-  const pnlEl = document.getElementById("heroLivePnl");
-  const tpEl = document.getElementById("heroTargetPrice");
-  const slEl = document.getElementById("heroSlPrice");
-  const tpSub = document.getElementById("heroTargetSub");
-  const slSub = document.getElementById("heroSlSub");
+function renderActiveGrid() {
+  const container = document.getElementById("activeGrid");
+  if (!container) return;
 
-  if (symEl) symEl.innerText = active.symbol;
-  if (compEl) compEl.innerText = active.company;
-  if (entryTimeEl) {
-    const d = new Date(active.entry_time);
-    entryTimeEl.innerText = d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-  }
+  const picks = appState.activePicks || [];
+  let html = "";
 
-  if (scoreValEl) scoreValEl.innerText = active.combined_score || "--";
-  if (oiScoreEl) oiScoreEl.innerText = active.oi_score || "--";
-  if (mktScoreEl) mktScoreEl.innerText = active.market_score || "--";
-  if (sigTwoMinEl) sigTwoMinEl.innerText = active.signal_two_min || "LONG -> LONG";
+  picks.forEach((p, idx) => {
+    const sym = p.symbol;
+    const comp = p.company || sym;
+    const entry = parseFloat(p.entry_price || 0);
+    const curr = parseFloat(p.current_price || entry);
+    const sl = parseFloat(p.sl_price || 0);
+    const tgt = parseFloat(p.target_price || 0);
+    const sl_pct = parseFloat(p.sl_pct || 0.75);
+    const tgt_pct = parseFloat(p.target_pct || 1.80);
+    const rr = parseFloat(p.rr_ratio || 2.2);
+    const pnl_pct = parseFloat(p.pnl_pct || 0);
+    const pnl_cls = pnl_pct >= 0 ? "profit" : "loss";
+    const sign = pnl_pct >= 0 ? "+" : "";
+    const combined_score = p.combined_score || 90.0;
+    const oi_score = p.oi_score || 9.8;
+    const sig_pair = p.signal_two_min || "LONG -> LONG";
+    const entry_time = (p.entry_time || "").substring(0, 19).replace("T", " ");
 
-  const ep = active.entry_price || active.spot;
-  const cp = active.current_price || ep;
-  const tp = active.target_price;
-  const sl = active.sl_price;
-  const slPct = active.sl_pct || 1.8;
-  const tgtPct = active.target_pct || 3.6;
-  const rr = active.rr_ratio || 2.0;
+    const dist_total = Math.max(0.001, tgt - sl);
+    const pct_pos = Math.max(0, Math.min(100, ((curr - sl) / dist_total) * 100));
 
-  if (epEl) epEl.innerText = fmtRupee(ep);
-  if (cpEl) cpEl.innerText = fmtRupee(cp);
-  if (tpEl) tpEl.innerText = fmtRupee(tp);
-  if (slEl) slEl.innerText = fmtRupee(sl);
+    html += `
+      <div class="active-portfolio-card">
+        <div class="card-top-header">
+          <div class="card-sym-group">
+            <span class="card-slot-badge">#${idx + 1}</span>
+            <span class="card-symbol">${sym}</span>
+            <span class="badge badge-long">LONG SWING</span>
+            <span class="badge badge-score">SCORE ${combined_score}</span>
+          </div>
+          <div class="card-pnl ${pnl_cls}">
+            <span class="pnl-lbl">P&amp;L</span>
+            <span class="pnl-val">${sign}${pnl_pct.toFixed(2)}%</span>
+          </div>
+        </div>
 
-  if (tpSub) tpSub.innerText = `+${tgtPct}% (1:${rr} R:R)`;
-  if (slSub) slSub.innerText = `-${slPct}% (Dynamic ATR)`;
+        <div class="card-company-name">${comp} &bull; ${sig_pair}</div>
 
-  const pnl = active.pnl_pct || (((cp - ep) / ep) * 100);
-  if (pnlEl) {
-    pnlEl.innerText = `P&L: ${fmtPct(pnl)}`;
-    pnlEl.style.color = pnl >= 0 ? "var(--success)" : "var(--danger)";
-  }
+        <div class="card-score-mini">
+          <span>OI Score: <strong>${oi_score.toFixed(2)}</strong> &times; Mkt = <strong>${combined_score}</strong> (&ge;90)</span>
+        </div>
 
-  // Rationale
-  const factorsEl = document.getElementById("heroFactors");
-  if (factorsEl) {
-    factorsEl.innerHTML = `
-      <span class="factor-chip">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" fill="#0EA5E9"/></svg>
-        ${escapeHtml(active.oi_rationale || "Double 1-Min Signal: Persistent Long Accumulation")}
-      </span>
-      <span class="factor-chip">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" fill="#0EA5E9"/></svg>
-        Combined Score: ${active.combined_score} (OI: ${active.oi_score} x Market: ${active.market_score} >= 90.0)
-      </span>
-      <span class="factor-chip">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" fill="#0EA5E9"/></svg>
-        Dynamic ATR Swing Calibration: -${slPct}% SL vs +${tgtPct}% Target (1:${rr} R:R)
-      </span>
+        <div class="card-metrics-grid">
+          <div class="c-metric">
+            <span class="cm-label">Entry Price</span>
+            <span class="cm-value">₹${entry.toLocaleString("en-IN", {minimumFractionDigits: 2})}</span>
+          </div>
+          <div class="c-metric">
+            <span class="cm-label">Live Spot</span>
+            <span class="cm-value highlight">₹${curr.toLocaleString("en-IN", {minimumFractionDigits: 2})}</span>
+          </div>
+          <div class="c-metric danger">
+            <span class="cm-label">Dynamic SL (-${sl_pct.toFixed(2)}%)</span>
+            <span class="cm-value">₹${sl.toLocaleString("en-IN", {minimumFractionDigits: 2})}</span>
+          </div>
+          <div class="c-metric success">
+            <span class="cm-label">Dynamic Target (+${tgt_pct.toFixed(2)}%)</span>
+            <span class="cm-value">₹${tgt.toLocaleString("en-IN", {minimumFractionDigits: 2})}</span>
+          </div>
+        </div>
+
+        <div class="card-progress-wrap">
+          <div class="card-progress-labels">
+            <span class="lbl-sl">SL: ₹${sl.toFixed(2)}</span>
+            <span class="lbl-curr">Spot: ₹${curr.toFixed(2)}</span>
+            <span class="lbl-tgt">TGT: ₹${tgt.toFixed(2)}</span>
+          </div>
+          <div class="card-progress-bar">
+            <div class="card-progress-fill" style="width: ${pct_pos.toFixed(1)}%"></div>
+          </div>
+        </div>
+
+        <div class="card-footer-meta">
+          <span class="meta-tag">R:R 1:${rr.toFixed(2)}</span>
+          <span class="meta-tag">Entry: ${entry_time}</span>
+          <span class="meta-tag status-locked">LOCKED UNTIL HIT</span>
+        </div>
+      </div>
+    `;
+  });
+
+  for (let s = picks.length + 1; s <= 5; s++) {
+    html += `
+      <div class="active-portfolio-card empty-slot">
+        <div class="empty-slot-content">
+          <div class="empty-icon">⏱️</div>
+          <div class="empty-title">Scanning for Slot #${s}</div>
+          <div class="empty-desc">Evaluating 2-signal OI velocity * Market Score &ge; 90 on 1-min cycle.</div>
+        </div>
+      </div>
     `;
   }
 
-  // Progress Gauge
-  renderProgressGauge(active);
-}
-
-function renderProgressGauge(active) {
-  const gaugeFill = document.getElementById("gaugeFill");
-  const gaugePin = document.getElementById("gaugePin");
-  const pinTooltip = document.getElementById("pinTooltip");
-  const distToSlEl = document.getElementById("distToSl");
-  const distToTargetEl = document.getElementById("distToTarget");
-  const gSlEl = document.getElementById("gaugeSlPrice");
-  const gEpEl = document.getElementById("gaugeEntryPrice");
-  const gTpEl = document.getElementById("gaugeTargetPrice");
-
-  const ep = parseFloat(active.entry_price);
-  const cp = parseFloat(active.current_price);
-  const tp = parseFloat(active.target_price);
-  const sl = parseFloat(active.sl_price);
-  const pnl = parseFloat(active.pnl_pct || 0);
-
-  if (gSlEl) gSlEl.innerText = fmtRupee(sl);
-  if (gEpEl) gEpEl.innerText = fmtRupee(ep);
-  if (gTpEl) gTpEl.innerText = fmtRupee(tp);
-
-  let pctPos = 50;
-  if (cp >= ep) {
-    const range = tp - ep;
-    pctPos = 50 + Math.min(48, range > 0 ? ((cp - ep) / range) * 50 : 0);
-  } else {
-    const range = ep - sl;
-    pctPos = 50 - Math.min(48, range > 0 ? ((ep - cp) / range) * 50 : 0);
-  }
-
-  if (gaugePin) gaugePin.style.left = `${pctPos}%`;
-  if (pinTooltip) pinTooltip.innerText = `${fmtRupee(cp)} (${fmtPct(pnl)})`;
-
-  if (gaugeFill) {
-    if (pctPos >= 50) {
-      gaugeFill.className = "gauge-fill positive";
-      gaugeFill.style.left = "50%";
-      gaugeFill.style.width = `${pctPos - 50}%`;
-    } else {
-      gaugeFill.className = "gauge-fill negative";
-      gaugeFill.style.left = `${pctPos}%`;
-      gaugeFill.style.width = `${50 - pctPos}%`;
-    }
-  }
-
-  if (distToTargetEl) distToTargetEl.innerText = `Target Gap: ₹${Math.abs(tp - cp).toFixed(2)}`;
-  if (distToSlEl) distToSlEl.innerText = `SL Buffer: ₹${Math.abs(cp - sl).toFixed(2)}`;
+  container.innerHTML = html;
+  updatePortfolioBadge();
 }
 
 function renderHistoryTable() {
   const tbody = document.getElementById("historyTbody");
   const counter = document.getElementById("historyCounter");
   if (!tbody) return;
-  if (counter) counter.innerText = `(${appState.history.length} Completed)`;
 
-  if (appState.history.length === 0) {
-    tbody.innerHTML = `
-      <tr class="empty-row">
-        <td colspan="9">
-          <div class="empty-state">
-            <span class="empty-icon">⏳</span>
-            <span class="empty-title">Active OI swing pick is currently in progress.</span>
-            <span class="empty-sub">Once the active share triggers its Dynamic ATR Stop Loss or Target, it will log here and immediately pick the next share with Score >= 90.</span>
-          </div>
-        </td>
-      </tr>
-    `;
+  const hist = appState.history || [];
+  if (counter) counter.innerText = `(${hist.length} Completed)`;
+
+  if (hist.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No completed trades recorded yet. Audit log is permanent and immutable.</td></tr>';
     return;
   }
 
-  tbody.innerHTML = appState.history.map(item => {
-    const isTarget = item.is_win;
-    const badgeClass = isTarget ? "outcome-badge target" : "outcome-badge sl";
-    const pnlClass = item.pnl_pct >= 0 ? "pnl-cell positive" : "pnl-cell negative";
-    const exitDate = new Date(item.exit_time);
-    return `
+  let rows = "";
+  hist.slice(0, 15).forEach(h => {
+    const pnl = parseFloat(h.pnl_pct || 0);
+    const pnl_cls = pnl >= 0 ? "text-green" : "text-red";
+    const sign = pnl >= 0 ? "+" : "";
+    const isTarget = (h.outcome || "").includes("TARGET");
+    const badge_cls = isTarget ? "badge-profit" : "badge-sl";
+    const exitTime = (h.exit_time || "").substring(0, 19).replace("T", " ");
+
+    rows += `
       <tr>
-        <td class="mono-cell">#${item.id}</td>
-        <td>
-          <div class="sym-cell">
-            <span class="sym-code">${escapeHtml(item.symbol)}</span>
-            <span class="sym-name">${escapeHtml(item.company || "")}</span>
-          </div>
-        </td>
-        <td><span class="direction-badge">${escapeHtml(item.direction)} (OI SWING)</span></td>
-        <td class="mono-cell">${fmtRupee(item.entry_price)}</td>
-        <td class="mono-cell">${fmtRupee(item.exit_price)}</td>
-        <td class="${pnlClass}">${fmtPct(item.pnl_pct)}</td>
-        <td><span class="${badgeClass}">${isTarget ? "🏆 TARGET HIT" : "🛑 STOP LOSS"}</span></td>
-        <td class="mono-cell">${escapeHtml(item.duration)}</td>
-        <td class="mono-cell">${exitDate.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</td>
+        <td><strong>${h.symbol}</strong></td>
+        <td><span class="badge ${badge_cls}">${h.outcome || "RESOLVED"}</span></td>
+        <td>₹${Number(h.entry_price || 0).toLocaleString("en-IN", {minimumFractionDigits: 2})}</td>
+        <td>₹${Number(h.exit_price || 0).toLocaleString("en-IN", {minimumFractionDigits: 2})}</td>
+        <td class="${pnl_cls}"><strong>${sign}${pnl.toFixed(2)}%</strong></td>
+        <td>${h.combined_score || "-"}</td>
+        <td>1:${h.rr_ratio || "2.0"}</td>
+        <td>${exitTime}</td>
       </tr>
     `;
-  }).join("");
+  });
+
+  tbody.innerHTML = rows;
 }
 
 function updateSummaryMetrics() {
-  const history = appState.history;
-  const total = history.length;
-  const wins = history.filter(h => h.is_win).length;
-  const losses = total - wins;
-  const winRate = total > 0 ? ((wins / total) * 100).toFixed(1) : "0.0";
-  let netPnl = 0.0;
-  history.forEach(h => { netPnl += (h.pnl_pct || 0); });
+  const hist = appState.history || [];
+  const total = hist.length;
+  let targets = 0;
+  let sls = 0;
+  let netPnl = 0;
 
-  const totalEl = document.getElementById("statTotalPicks");
-  const winsEl = document.getElementById("statTargetHits");
-  const lossesEl = document.getElementById("statSlHits");
-  const wrEl = document.getElementById("statWinRate");
-  const pnlEl = document.getElementById("statNetPnl");
+  hist.forEach(h => {
+    const pnl = parseFloat(h.pnl_pct || 0);
+    netPnl += pnl;
+    if ((h.outcome || "").includes("TARGET")) targets++;
+    else if ((h.outcome || "").includes("STOP")) sls++;
+  });
 
-  if (totalEl) totalEl.innerText = total;
-  if (winsEl) winsEl.innerText = wins;
-  if (lossesEl) lossesEl.innerText = losses;
-  if (wrEl) wrEl.innerText = `${winRate}%`;
-  if (pnlEl) pnlEl.innerText = fmtPct(netPnl);
-}
+  const winRate = total > 0 ? ((targets / total) * 100).toFixed(1) : "0.0";
+  const pnlSign = netPnl >= 0 ? "+" : "";
 
-function escapeHtml(text) {
-  if (!text) return "";
-  return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = val;
+  };
+
+  setVal("statTotalPicks", total);
+  setVal("statTargetHits", targets);
+  setVal("statSlHits", sls);
+  setVal("statWinRate", `${winRate}%`);
+  setVal("statNetPnl", `${pnlSign}${netPnl.toFixed(2)}%`);
 }
