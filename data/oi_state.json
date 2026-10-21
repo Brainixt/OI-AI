@@ -4,7 +4,7 @@
     "company": "Pidilite Industries",
     "direction": "LONG",
     "entry_price": 1473.7,
-    "current_price": 1473.7,
+    "current_price": 1472.7,
     "target_price": 1510.54,
     "sl_price": 1456.02,
     "target_pct": 2.5,
@@ -16,7 +16,7 @@
     "signal_two_min": "LONG -> LONG",
     "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +0)",
     "atr_pct": 0.44,
-    "pnl_pct": 0.0,
+    "pnl_pct": -0.07,
     "pivots": {
       "pivot": 1488.57,
       "r1": 1500.03,
@@ -37,15 +37,15 @@
       "distance_to_pivot_pct": -1.0
     },
     "entry_time": "2026-10-21T11:35:51.811597+05:30",
-    "last_updated": "2026-10-21T11:36:15.635813+05:30"
+    "last_updated": "2026-10-21T12:14:39.223218+05:30"
   },
   "nifty50": {
-    "price": "22887.9500",
-    "change": "-1.0000",
-    "change_percent": "0.0000",
+    "price": "22806.0500",
+    "change": "-82.9000",
+    "change_percent": "-0.3600",
     "direction": "NA"
   },
-  "market_score": 9.2,
-  "timestamp": "2026-10-21T11:36:15.642073+05:30",
+  "market_score": 8.2,
+  "timestamp": "2026-10-21T12:14:39.223218+05:30",
   "total_completed_picks": 0
 }
