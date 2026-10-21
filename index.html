@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>OI-AI — Autonomous 2-Signal Open Interest Swing Picker</title>
-  <meta name="description" content="OI-AI: Autonomous quantitative stock picker using 2 signals on 1-min gap, OI Score * Market Score >= 90, and Dynamic ATR swing boundaries.">
+  <title>OI-AI — Autonomous 2-Signal Open Interest Swing Engine (Max 5 Active)</title>
+  <meta name="description" content="OI-AI: Autonomous quantitative stock selection holding up to 5 active swing shares concurrently based on 2-signal OI velocity and market score multiplication >= 90.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
       <div class="header-left">
         <div class="brand-row">
           <span class="brand-title">OI-AI</span>
-          <span class="version-tag">2-Signal OI Model</span>
+          <span class="version-tag">Max 5 Swing Portfolio</span>
         </div>
         <span class="brand-subtitle">Autonomous Open Interest Predictive Engine</span>
       </div>
@@ -27,166 +27,131 @@
       <div class="header-center">
         <div class="nifty-ticker" id="niftyTicker">
           <span class="ticker-label">NIFTY 50</span>
-          <span class="ticker-val" id="niftyPrice">22,980.00</span>
-          <span class="ticker-chg up" id="niftyChange">+90.00 (+0.39%)</span>
+          <span class="ticker-val" id="niftyPrice">22,887.95</span>
+          <span class="ticker-chg up" id="niftyChange">+0.00 (+0.00%)</span>
         </div>
       </div>
 
       <div class="header-right">
         <div class="status-pill" id="engineStatusPill">
           <span class="pulse-indicator"></span>
-          <span id="engineStatusText">Live OI Loop Active</span>
+          <span id="engineStatusText">5-Share OI Loop Active</span>
         </div>
         <div class="cycle-pill">
           <span class="cycle-icon">⏱️</span>
-          <span class="cycle-label">Next Scan:</span>
+          <span class="cycle-label">Scan Cycle:</span>
           <span class="cycle-countdown" id="cycleCountdown">60s</span>
         </div>
         <div class="clock-pill" id="clockDisplay">--:--:-- IST</div>
       </div>
     </header>
 
-    <!-- Contract Banner -->
+    <!-- Notice Bar: OI Invariant & Dynamic Algorithm -->
     <div class="info-banner">
       <div class="banner-badge">OI ALGO CONTRACT</div>
       <div class="banner-text">
-        <strong>2-Signal Gap Algorithm:</strong> Compares 1-min OI velocity across 2 snapshots to generate OI Score • Multiplies <code>OI Score * Market Score</code>; only picks shares where <strong>Score &ge; 90.0</strong> • <strong>Dynamic ATR Swing Model:</strong> Calibrated Stop Loss (1.2%–2.2%) &amp; Target (2.5%–4.5% with 1:2.0 R:R) • <strong>Single-Share Invariant:</strong> Strictly 1 active stock • Immediate Rollover • Zero trades/messages.
+        <strong>Active Portfolio Invariant:</strong> Maximum <strong>5 active shares</strong> at a time • <strong>2-Signal Gap Algorithm:</strong> Compares 1-min OI velocity across 2 snapshots to generate OI Score • Multiplies <code>OI Score * Market Score</code>; only picks shares where <strong>Score &ge; 90.0</strong> • <strong>Dynamic ATR Swing Model:</strong> Profit Target calibrated close to <strong>1.5% to 2.0%</strong> • Stop Loss maintained in <strong>0.5% to 1.5% range</strong> • Strict <strong>minimum 1:2.0 Risk-to-Reward ratio</strong> • <strong>Immediate Replacement:</strong> When any active share exits on Target or SL, the next qualifying share is engaged instantly • <strong>Display only:</strong> Zero broker orders, Zero SMS/Email/Messages.
       </div>
     </div>
 
-    <!-- Active Pick Spotlight Section -->
+    <!-- Active Portfolio Section (Up to 5 Shares) -->
     <section class="active-pick-container" id="activePickSection">
       <div class="section-top-bar">
         <div class="section-title-wrap">
           <span class="live-dot"></span>
-          <h2 class="section-title">ACTIVE OI SWING PICK</h2>
-          <span class="active-badge" id="activeStateBadge">LOCKED IN POSITION</span>
+          <h2 class="section-title">ACTIVE SWING PORTFOLIO</h2>
+          <span class="active-badge" id="activeStateBadge">5 / 5 POSITIONS ACTIVE</span>
         </div>
         <div class="active-meta-wrap">
-          <span class="active-since-text">Entry Time: <strong id="heroEntryTime">Live</strong></span>
-          <span class="holding-time-badge" id="heroDuration">Active</span>
+          <span class="active-since-text">Status: <strong>Continuous 1-Min Monitor</strong></span>
+          <span class="holding-time-badge" id="portfolioRuleBadge">Max 5 Active Shares</span>
         </div>
       </div>
 
-      <!-- Spotlight Card (Pre-rendered for Instant Display) -->
-      <div class="spotlight-card" id="spotlightCard">
-        
-        <!-- Left: Stock Identity & OI Score -->
-        <div class="spotlight-left">
-          <div class="stock-headline">
-            <div class="symbol-row">
-              <h1 class="stock-symbol" id="heroSymbol">INFY</h1>
-              <span class="direction-badge" id="heroDirection">LONG (OI SWING)</span>
-              <span class="score-badge-highlight" id="heroCombinedBadge">SCORE: 91.2</span>
-            </div>
-            <div class="company-name" id="heroCompany">Infosys Limited</div>
-          </div>
+      <!-- Active Portfolio Cards Grid (Pre-rendered for Zero Loading Flash) -->
+      <div class="active-portfolio-grid" id="activeGrid">
+        <!-- ACTIVE_PORTFOLIO_PLACEHOLDER -->
+<div class="active-portfolio-card">
+  <div class="card-top-header">
+    <div class="card-sym-group">
+      <span class="card-slot-badge">#1</span>
+      <span class="card-symbol">PIDILITIND</span>
+      <span class="badge badge-long">LONG SWING</span>
+      <span class="badge badge-score">SCORE 92.0</span>
+    </div>
+    <div class="card-pnl loss">
+      <span class="pnl-lbl">P&amp;L</span>
+      <span class="pnl-val">-0.07%</span>
+    </div>
+  </div>
 
-          <div class="quant-score-matrix">
-            <div class="score-card">
-              <span class="score-label">Combined Score (OI x Mkt)</span>
-              <div class="score-value-wrap">
-                <span class="score-num" id="heroCombinedScore">91.2</span>
-                <span class="score-denom">/100</span>
-              </div>
-              <div class="score-meter-bar">
-                <div class="score-meter-fill" id="heroScoreFill" style="width: 91%"></div>
-              </div>
-            </div>
+  <div class="card-company-name">Pidilite Industries &bull; LONG -> LONG</div>
 
-            <div class="score-card">
-              <span class="score-label">2-Signal OI Score</span>
-              <div class="score-value-wrap">
-                <span class="score-num" id="heroOiScore">9.5</span>
-                <span class="score-denom">/10</span>
-              </div>
-              <span class="score-subtext" id="heroSignalTwoMin">LONG -> LONG</span>
-            </div>
+  <div class="card-score-mini">
+    <span>OI Score: <strong>10.00</strong> &times; Mkt: <strong>8.20</strong> = <strong>92.0</strong> (&ge;90)</span>
+  </div>
 
-            <div class="score-card">
-              <span class="score-label">Market Score</span>
-              <div class="score-value-wrap">
-                <span class="score-num" id="heroMarketScore">9.6</span>
-                <span class="score-denom">/10</span>
-              </div>
-              <span class="score-subtext">Nifty Regime Match</span>
-            </div>
-          </div>
+  <div class="card-metrics-grid">
+    <div class="c-metric">
+      <span class="cm-label">Entry Price</span>
+      <span class="cm-value">₹1,473.70</span>
+    </div>
+    <div class="c-metric">
+      <span class="cm-label">Live Spot</span>
+      <span class="cm-value highlight">₹1,472.70</span>
+    </div>
+    <div class="c-metric danger">
+      <span class="cm-label">Dynamic SL (-0.60%)</span>
+      <span class="cm-value">₹1,464.86</span>
+    </div>
+    <div class="c-metric success">
+      <span class="cm-label">Dynamic Target (+1.50%)</span>
+      <span class="cm-value">₹1,495.81</span>
+    </div>
+  </div>
 
-          <!-- Signal Rationales -->
-          <div class="factors-container">
-            <span class="factors-heading">2-Minute Signal Rationale &amp; Dynamic Drivers</span>
-            <div class="factors-chips" id="heroFactors">
-              <span class="factor-chip">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" fill="#0EA5E9"/></svg>
-                Double 1-Min Signal: Persistent Long Accumulation (LONG -> LONG)
-              </span>
-              <span class="factor-chip">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" fill="#0EA5E9"/></svg>
-                Combined Score: 91.2 (OI: 9.5 x Market: 9.6 >= 90.0 Threshold)
-              </span>
-              <span class="factor-chip">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" fill="#0EA5E9"/></svg>
-                Dynamic ATR Swing Model: -1.75% SL vs +3.50% Target (1:2.0 R:R)
-              </span>
-            </div>
-          </div>
-        </div>
+  <div class="card-progress-wrap">
+    <div class="card-progress-labels">
+      <span class="lbl-sl">SL: ₹1,464.86</span>
+      <span class="lbl-curr">Spot: ₹1,472.70</span>
+      <span class="lbl-tgt">TGT: ₹1,495.81</span>
+    </div>
+    <div class="card-progress-bar">
+      <div class="card-progress-fill" style="width: 25.3%"></div>
+    </div>
+  </div>
 
-        <!-- Right: Real-time Price, Target, SL & Interactive Gauge -->
-        <div class="spotlight-right">
-          
-          <!-- Key Levels 4-Grid -->
-          <div class="levels-grid">
-            <div class="level-box entry-box">
-              <span class="box-title">ENTRY BASIS</span>
-              <span class="box-price" id="heroEntryPrice">₹ 1,168.05</span>
-              <span class="box-sub">Spot at Entry</span>
-            </div>
-            <div class="level-box live-box">
-              <span class="box-title">CURRENT SPOT</span>
-              <span class="box-price live-flash" id="heroCurrentPrice">₹ 1,168.05</span>
-              <span class="box-sub" id="heroLivePnl" style="color: var(--success);">P&amp;L: +0.00%</span>
-            </div>
-            <div class="level-box target-box">
-              <span class="box-title">DYNAMIC ATR TARGET</span>
-              <span class="box-price" id="heroTargetPrice">₹ 1,208.93</span>
-              <span class="box-sub target-text" id="heroTargetSub">+3.50% (1:2.0 R:R)</span>
-            </div>
-            <div class="level-box sl-box">
-              <span class="box-title">DYNAMIC ATR STOP LOSS</span>
-              <span class="box-price" id="heroSlPrice">₹ 1,147.61</span>
-              <span class="box-sub sl-text" id="heroSlSub">-1.75% (ATR Buffer)</span>
-            </div>
-          </div>
-
-          <!-- Progress Track -->
-          <div class="gauge-container">
-            <div class="gauge-header">
-              <span class="gauge-tag sl-tag">Dynamic SL (<span id="gaugeSlPrice">₹ 1,147.61</span>)</span>
-              <span class="gauge-tag entry-tag">Entry (<span id="gaugeEntryPrice">₹ 1,168.05</span>)</span>
-              <span class="gauge-tag target-tag">Dynamic Target (<span id="gaugeTargetPrice">₹ 1,208.93</span>)</span>
-            </div>
-
-            <div class="gauge-track-wrap">
-              <div class="gauge-track">
-                <div class="entry-mid-marker" title="Entry Baseline"></div>
-                <div class="gauge-fill" id="gaugeFill"></div>
-                <div class="gauge-pin" id="gaugePin" style="left: 50%;">
-                  <div class="pin-tooltip" id="pinTooltip">₹ 1,168.05 (+0.00%)</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="gauge-footer">
-              <span class="dist-text sl-dist" id="distToSl">Buffer to SL: ₹20.44</span>
-              <span class="dist-status" id="distStatus">In Swing Range</span>
-              <span class="dist-text target-dist" id="distToTarget">Gap to Target: ₹40.88</span>
-            </div>
-          </div>
-
-        </div>
-
+  <div class="card-footer-meta">
+    <span class="meta-tag">R:R 1:2.50</span>
+    <span class="meta-tag">Entry: 2026-10-21 11:35:51</span>
+    <span class="meta-tag status-locked">LOCKED UNTIL HIT</span>
+  </div>
+</div><div class="active-portfolio-card empty-slot">
+  <div class="empty-slot-content">
+    <div class="empty-icon">⏱️</div>
+    <div class="empty-title">Scanning for Slot #2</div>
+    <div class="empty-desc">Evaluating 2-signal OI velocity * Market Score &ge; 90 on 1-min cycle.</div>
+  </div>
+</div><div class="active-portfolio-card empty-slot">
+  <div class="empty-slot-content">
+    <div class="empty-icon">⏱️</div>
+    <div class="empty-title">Scanning for Slot #3</div>
+    <div class="empty-desc">Evaluating 2-signal OI velocity * Market Score &ge; 90 on 1-min cycle.</div>
+  </div>
+</div><div class="active-portfolio-card empty-slot">
+  <div class="empty-slot-content">
+    <div class="empty-icon">⏱️</div>
+    <div class="empty-title">Scanning for Slot #4</div>
+    <div class="empty-desc">Evaluating 2-signal OI velocity * Market Score &ge; 90 on 1-min cycle.</div>
+  </div>
+</div><div class="active-portfolio-card empty-slot">
+  <div class="empty-slot-content">
+    <div class="empty-icon">⏱️</div>
+    <div class="empty-title">Scanning for Slot #5</div>
+    <div class="empty-desc">Evaluating 2-signal OI velocity * Market Score &ge; 90 on 1-min cycle.</div>
+  </div>
+</div>
+<!-- /ACTIVE_PORTFOLIO_PLACEHOLDER -->
       </div>
     </section>
 
@@ -196,28 +161,28 @@
         <div class="metric-icon">🎯</div>
         <div class="metric-data">
           <span class="metric-val" id="statTotalPicks">0</span>
-          <span class="metric-label">Total OI Picks</span>
+          <span class="metric-label">Total Swing Trades</span>
         </div>
       </div>
       <div class="metric-card success">
         <div class="metric-icon">🏆</div>
         <div class="metric-data">
           <span class="metric-val" id="statTargetHits">0</span>
-          <span class="metric-label">Dynamic ATR Target Hits</span>
+          <span class="metric-label">Target Hits (+1.5% - 2.0%)</span>
         </div>
       </div>
       <div class="metric-card danger">
         <div class="metric-icon">🛡️</div>
         <div class="metric-data">
           <span class="metric-val" id="statSlHits">0</span>
-          <span class="metric-label">Dynamic ATR Stop Losses</span>
+          <span class="metric-label">Stop Losses (-0.6% - 0.95%)</span>
         </div>
       </div>
       <div class="metric-card winrate">
         <div class="metric-icon">📈</div>
         <div class="metric-data">
           <span class="metric-val" id="statWinRate">0.0%</span>
-          <span class="metric-label">Swing Accuracy</span>
+          <span class="metric-label">Win Rate</span>
         </div>
       </div>
       <div class="metric-card pnl">
@@ -229,12 +194,12 @@
       </div>
     </section>
 
-    <!-- Pick History Log (Immutable Audit Log) -->
+    <!-- Pick History Log -->
     <section class="history-container">
       <div class="history-top">
         <div class="history-title-group">
           <span class="history-icon">📜</span>
-          <h3 class="history-title">Sequential Pick &amp; Exit Log</h3>
+          <h3 class="history-title">Resolved Swing Trades Audit Log</h3>
           <span class="history-counter" id="historyCounter">(0 Completed)</span>
         </div>
         <div class="history-actions">
@@ -247,62 +212,134 @@
           <table class="history-table" id="historyTable">
             <thead>
               <tr>
-                <th>#</th>
-                <th>Share / Company</th>
-                <th>Mode</th>
-                <th>Entry Price</th>
+                <th>Symbol</th>
+                <th>Outcome</th>
+                <th>Entry Basis</th>
                 <th>Exit Price</th>
-                <th>P&amp;L %</th>
-                <th>Exit Outcome</th>
-                <th>Duration</th>
+                <th>Realized P&amp;L</th>
+                <th>Combined Score</th>
+                <th>R:R Ratio</th>
                 <th>Exit Timestamp</th>
               </tr>
             </thead>
             <tbody id="historyTbody">
-              <tr class="empty-row">
-                <td colspan="9">
-                  <div class="empty-state">
-                    <span class="empty-icon">⏳</span>
-                    <span class="empty-title">Active OI swing pick is currently in progress.</span>
-                    <span class="empty-sub">Once the active share triggers its Dynamic ATR Stop Loss or Target, it will log here and immediately pick the next share with Score &ge; 90.</span>
-                  </div>
-                </td>
-              </tr>
+              <!-- HISTORY_TABLE_PLACEHOLDER -->
+<tr><td colspan="8" class="text-center text-muted">No completed trades recorded yet. Audit log is permanent and immutable.</td></tr>
+<!-- /HISTORY_TABLE_PLACEHOLDER -->
             </tbody>
           </table>
         </div>
       </div>
     </section>
 
+    <!-- Footer -->
     <footer class="app-footer">
-      <p>
-        <strong>OI-AI Predictive Architecture:</strong> Evaluates 1-minute velocity across two consecutive snapshots to determine persistent Open Interest buildup. Combined Score = OI Score &times; Market Score. Exactly 1 active stock is tracked with Dynamic ATR swing boundaries until mathematical resolution. Educational &amp; quantitative display only.
-      </p>
-      <div class="footer-meta">
-        <span>Host: <code>brainixt.github.io/OI-AI</code></span>
-        <span>Engine: Python 2-Signal OI Engine</span>
-        <span>Update Frequency: Every 60 Seconds</span>
+      <div class="footer-content">
+        <span>OI-AI &bull; Autonomous 2-Signal Open Interest Swing Engine</span>
+        <span>Strict Invariant: Max 5 Concurrent Shares &bull; Target ~1.5%-2.0% &bull; SL 0.5%-1.5% &bull; Min 1:2.0 R:R &bull; Zero Impact to Rishabh-F-O</span>
       </div>
     </footer>
 
   </div>
 
-  <!-- Pre-embedded active state for instantaneous rendering (Zero loading screen) -->
+  <!-- Embedded Initial State for Zero-Loading-Screen Instant Render -->
   <script id="oiStateEmbed">
     window.OI_INITIAL_STATE = {
-    "active_pick": null,
-    "nifty50": {
-        "price": "22884.1500",
-        "change": "-4.8000",
-        "change_percent": "-0.0200",
-        "direction": "NA"
-    },
+  "active_pick": {
+    "symbol": "PIDILITIND",
+    "company": "Pidilite Industries",
+    "direction": "LONG",
+    "entry_price": 1473.7,
+    "current_price": 1472.7,
+    "target_price": 1495.81,
+    "sl_price": 1464.86,
+    "target_pct": 1.5,
+    "sl_pct": 0.6,
+    "rr_ratio": 2.5,
+    "oi_score": 10.0,
     "market_score": 9.2,
-    "timestamp": "2026-10-21T11:27:01.226252+05:30",
-    "total_completed_picks": 0
+    "combined_score": 92.0,
+    "signal_two_min": "LONG -> LONG",
+    "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +0)",
+    "atr_pct": 0.44,
+    "pnl_pct": -0.07,
+    "pivots": {
+      "pivot": 1488.57,
+      "r1": 1500.03,
+      "s1": 1471.13,
+      "r2": 1517.47,
+      "s2": 1459.67,
+      "r3": 1528.93,
+      "s3": 1442.23,
+      "r4": 1557.83,
+      "s4": 1413.33,
+      "high": 1506.0,
+      "low": 1477.1,
+      "close": 1482.6,
+      "bias": "BEARISH",
+      "zone": "S1-P",
+      "nearest_level": "S1",
+      "nearest_level_price": 1471.13,
+      "distance_to_pivot_pct": -1.0
+    },
+    "entry_time": "2026-10-21T11:35:51.811597+05:30",
+    "last_updated": "2026-10-21T15:13:09.408516+05:30"
+  },
+  "nifty50": {
+    "price": "22806.0500",
+    "change": "-82.9000",
+    "change_percent": "-0.3600",
+    "direction": "NA"
+  },
+  "market_score": 8.2,
+  "timestamp": "2026-10-21T15:13:09.408516+05:30",
+  "total_completed_picks": 0,
+  "active_picks": [
+    {
+      "symbol": "PIDILITIND",
+      "company": "Pidilite Industries",
+      "direction": "LONG",
+      "entry_price": 1473.7,
+      "current_price": 1472.7,
+      "target_price": 1495.81,
+      "sl_price": 1464.86,
+      "target_pct": 1.5,
+      "sl_pct": 0.6,
+      "rr_ratio": 2.5,
+      "oi_score": 10.0,
+      "market_score": 9.2,
+      "combined_score": 92.0,
+      "signal_two_min": "LONG -> LONG",
+      "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +0)",
+      "atr_pct": 0.44,
+      "pnl_pct": -0.07,
+      "pivots": {
+        "pivot": 1488.57,
+        "r1": 1500.03,
+        "s1": 1471.13,
+        "r2": 1517.47,
+        "s2": 1459.67,
+        "r3": 1528.93,
+        "s3": 1442.23,
+        "r4": 1557.83,
+        "s4": 1413.33,
+        "high": 1506.0,
+        "low": 1477.1,
+        "close": 1482.6,
+        "bias": "BEARISH",
+        "zone": "S1-P",
+        "nearest_level": "S1",
+        "nearest_level_price": 1471.13,
+        "distance_to_pivot_pct": -1.0
+      },
+      "entry_time": "2026-10-21T11:35:51.811597+05:30",
+      "last_updated": "2026-10-21T15:13:09.408516+05:30"
+    }
+  ]
 };
   </script>
 
+  <!-- OI-AI Frontend Application Engine -->
   <script src="js/oiai.js"></script>
 </body>
 </html>
