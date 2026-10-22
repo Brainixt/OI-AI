@@ -4,7 +4,7 @@
     "company": "GMR Airports",
     "direction": "LONG",
     "entry_price": 86.22,
-    "current_price": 86.17,
+    "current_price": 86.27,
     "target_price": 87.62,
     "sl_price": 85.54,
     "target_pct": 1.62,
@@ -16,7 +16,7 @@
     "signal_two_min": "LONG -> LONG",
     "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +537,075)",
     "atr_pct": 1.13,
-    "pnl_pct": -0.06,
+    "pnl_pct": 0.06,
     "pivots": {
       "pivot": 89.62,
       "r1": 91.55,
@@ -37,7 +37,7 @@
       "distance_to_pivot_pct": -3.79
     },
     "entry_time": "2026-10-22T09:22:22.003505+05:30",
-    "last_updated": "2026-10-22T10:35:22.613768+05:30",
+    "last_updated": "2026-10-22T10:36:34.349280+05:30",
     "order_placed": true,
     "quantity": 115,
     "trade_id": "TRD_OI-AI_GMRAIRPORT_1792641142003",
@@ -45,13 +45,13 @@
     "order_status": "SUBMITTED"
   },
   "nifty50": {
-    "price": "22715.0500",
-    "change": "-96.3000",
-    "change_percent": "-0.4200",
+    "price": "22763.1500",
+    "change": "-48.2000",
+    "change_percent": "-0.2100",
     "direction": "NA"
   },
-  "market_score": 9.0,
-  "timestamp": "2026-10-22T10:35:22.613768+05:30",
+  "market_score": 9.09,
+  "timestamp": "2026-10-22T10:36:34.349280+05:30",
   "total_completed_picks": 12,
   "active_picks": [
     {
@@ -59,7 +59,7 @@
       "company": "GMR Airports",
       "direction": "LONG",
       "entry_price": 86.22,
-      "current_price": 86.17,
+      "current_price": 86.27,
       "target_price": 87.62,
       "sl_price": 85.54,
       "target_pct": 1.62,
@@ -71,7 +71,7 @@
       "signal_two_min": "LONG -> LONG",
       "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +537,075)",
       "atr_pct": 1.13,
-      "pnl_pct": -0.06,
+      "pnl_pct": 0.06,
       "pivots": {
         "pivot": 89.62,
         "r1": 91.55,
@@ -92,7 +92,7 @@
         "distance_to_pivot_pct": -3.79
       },
       "entry_time": "2026-10-22T09:22:22.003505+05:30",
-      "last_updated": "2026-10-22T10:35:22.613768+05:30",
+      "last_updated": "2026-10-22T10:36:34.349280+05:30",
       "order_placed": true,
       "quantity": 115,
       "trade_id": "TRD_OI-AI_GMRAIRPORT_1792641142003",
@@ -104,7 +104,7 @@
       "company": "Hindalco Industries",
       "direction": "LONG",
       "entry_price": 874.75,
-      "current_price": 882.95,
+      "current_price": 887.0,
       "target_price": 887.87,
       "sl_price": 869.5,
       "target_pct": 1.5,
@@ -116,7 +116,7 @@
       "signal_two_min": "LONG -> LONG",
       "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +84,700)",
       "atr_pct": 0.85,
-      "pnl_pct": 0.94,
+      "pnl_pct": 1.4,
       "pivots": {
         "pivot": 900.57,
         "r1": 911.93,
@@ -137,7 +137,7 @@
         "distance_to_pivot_pct": -2.87
       },
       "entry_time": "2026-10-22T09:23:33.619717+05:30",
-      "last_updated": "2026-10-22T10:35:22.613768+05:30",
+      "last_updated": "2026-10-22T10:36:34.349280+05:30",
       "order_placed": true,
       "quantity": 11,
       "trade_id": "TRD_OI-AI_HINDALCO_1792641213619",
@@ -149,7 +149,7 @@
       "company": "ICICI Bank",
       "direction": "LONG",
       "entry_price": 1384.7,
-      "current_price": 1390.7,
+      "current_price": 1396.2,
       "target_price": 1405.47,
       "sl_price": 1376.39,
       "target_pct": 1.5,
@@ -161,7 +161,7 @@
       "signal_two_min": "LONG -> LONG",
       "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +78,400)",
       "atr_pct": 0.36,
-      "pnl_pct": 0.43,
+      "pnl_pct": 0.83,
       "pivots": {
         "pivot": 1393.3,
         "r1": 1397.4,
@@ -182,7 +182,7 @@
         "distance_to_pivot_pct": -0.62
       },
       "entry_time": "2026-10-22T10:07:01.919536+05:30",
-      "last_updated": "2026-10-22T10:35:22.613768+05:30",
+      "last_updated": "2026-10-22T10:36:34.349280+05:30",
       "order_placed": true,
       "quantity": 7,
       "trade_id": "TRD_OI-AI_ICICIBANK_1792643821919",
@@ -194,7 +194,7 @@
       "company": "JSW Steel",
       "direction": "LONG",
       "entry_price": 1224.9,
-      "current_price": 1224.9,
+      "current_price": 1227.4,
       "target_price": 1243.27,
       "sl_price": 1217.55,
       "target_pct": 1.5,
@@ -206,7 +206,7 @@
       "signal_two_min": "LONG -> LONG",
       "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +29,700)",
       "atr_pct": 0.59,
-      "pnl_pct": 0.0,
+      "pnl_pct": 0.2,
       "pivots": {
         "pivot": 1245.4,
         "r1": 1256.8,
@@ -227,7 +227,7 @@
         "distance_to_pivot_pct": -1.65
       },
       "entry_time": "2026-10-22T10:32:59.345651+05:30",
-      "last_updated": "2026-10-22T10:35:22.613768+05:30",
+      "last_updated": "2026-10-22T10:36:34.349280+05:30",
       "order_placed": true,
       "quantity": 8,
       "trade_id": "TRD_OI-AI_JSWSTEEL_1792645379345",
@@ -239,7 +239,7 @@
       "company": "INDUS TOWERS",
       "direction": "LONG",
       "entry_price": 380.15,
-      "current_price": 380.15,
+      "current_price": 380.85,
       "target_price": 385.85,
       "sl_price": 377.87,
       "target_pct": 1.5,
@@ -251,7 +251,7 @@
       "signal_two_min": "LONG -> LONG",
       "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +187,000)",
       "atr_pct": 0.46,
-      "pnl_pct": 0.0,
+      "pnl_pct": 0.18,
       "pivots": {
         "pivot": 382.37,
         "r1": 386.73,
@@ -272,7 +272,7 @@
         "distance_to_pivot_pct": -0.58
       },
       "entry_time": "2026-10-22T10:32:59.345651+05:30",
-      "last_updated": "2026-10-22T10:35:22.613768+05:30",
+      "last_updated": "2026-10-22T10:36:34.349280+05:30",
       "order_placed": true,
       "quantity": 26,
       "trade_id": "TRD_OI-AI_INDUSTOWER_1792645379566",
