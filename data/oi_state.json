@@ -4,7 +4,7 @@
     "company": "GMR Airports",
     "direction": "LONG",
     "entry_price": 86.22,
-    "current_price": 86.93,
+    "current_price": 86.84,
     "target_price": 87.62,
     "sl_price": 85.54,
     "target_pct": 1.62,
@@ -16,7 +16,7 @@
     "signal_two_min": "LONG -> LONG",
     "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +537,075)",
     "atr_pct": 1.13,
-    "pnl_pct": 0.82,
+    "pnl_pct": 0.72,
     "pivots": {
       "pivot": 89.62,
       "r1": 91.55,
@@ -37,7 +37,7 @@
       "distance_to_pivot_pct": -3.79
     },
     "entry_time": "2026-10-22T09:22:22.003505+05:30",
-    "last_updated": "2026-10-22T14:15:36.350435+05:30",
+    "last_updated": "2026-10-22T14:16:48.831022+05:30",
     "order_placed": true,
     "quantity": 115,
     "trade_id": "TRD_OI-AI_GMRAIRPORT_1792641142003",
@@ -45,13 +45,13 @@
     "order_status": "SUBMITTED"
   },
   "nifty50": {
-    "price": "22624.4500",
-    "change": "-186.9000",
+    "price": "22624.0000",
+    "change": "-187.3500",
     "change_percent": "-0.8200",
     "direction": "NA"
   },
   "market_score": 9.0,
-  "timestamp": "2026-10-22T14:15:36.350435+05:30",
+  "timestamp": "2026-10-22T14:16:48.831022+05:30",
   "total_completed_picks": 16,
   "active_picks": [
     {
@@ -59,7 +59,7 @@
       "company": "GMR Airports",
       "direction": "LONG",
       "entry_price": 86.22,
-      "current_price": 86.93,
+      "current_price": 86.84,
       "target_price": 87.62,
       "sl_price": 85.54,
       "target_pct": 1.62,
@@ -71,7 +71,7 @@
       "signal_two_min": "LONG -> LONG",
       "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +537,075)",
       "atr_pct": 1.13,
-      "pnl_pct": 0.82,
+      "pnl_pct": 0.72,
       "pivots": {
         "pivot": 89.62,
         "r1": 91.55,
@@ -92,7 +92,7 @@
         "distance_to_pivot_pct": -3.79
       },
       "entry_time": "2026-10-22T09:22:22.003505+05:30",
-      "last_updated": "2026-10-22T14:15:36.350435+05:30",
+      "last_updated": "2026-10-22T14:16:48.831022+05:30",
       "order_placed": true,
       "quantity": 115,
       "trade_id": "TRD_OI-AI_GMRAIRPORT_1792641142003",
@@ -104,7 +104,7 @@
       "company": "ICICI Bank",
       "direction": "LONG",
       "entry_price": 1384.7,
-      "current_price": 1392.7,
+      "current_price": 1394.3,
       "target_price": 1405.47,
       "sl_price": 1376.39,
       "target_pct": 1.5,
@@ -116,7 +116,7 @@
       "signal_two_min": "LONG -> LONG",
       "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +78,400)",
       "atr_pct": 0.36,
-      "pnl_pct": 0.58,
+      "pnl_pct": 0.69,
       "pivots": {
         "pivot": 1393.3,
         "r1": 1397.4,
@@ -137,7 +137,7 @@
         "distance_to_pivot_pct": -0.62
       },
       "entry_time": "2026-10-22T10:07:01.919536+05:30",
-      "last_updated": "2026-10-22T14:15:36.350435+05:30",
+      "last_updated": "2026-10-22T14:16:48.831022+05:30",
       "order_placed": true,
       "quantity": 7,
       "trade_id": "TRD_OI-AI_ICICIBANK_1792643821919",
@@ -182,7 +182,7 @@
         "distance_to_pivot_pct": -0.58
       },
       "entry_time": "2026-10-22T10:32:59.345651+05:30",
-      "last_updated": "2026-10-22T14:15:36.350435+05:30",
+      "last_updated": "2026-10-22T14:16:48.831022+05:30",
       "order_placed": true,
       "quantity": 26,
       "trade_id": "TRD_OI-AI_INDUSTOWER_1792645379566",
@@ -194,7 +194,7 @@
       "company": "Pidilite Industries",
       "direction": "LONG",
       "entry_price": 1469.0,
-      "current_price": 1475.3,
+      "current_price": 1476.3,
       "target_price": 1491.03,
       "sl_price": 1460.19,
       "target_pct": 1.5,
@@ -206,7 +206,7 @@
       "signal_two_min": "LONG -> LONG",
       "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +8,500)",
       "atr_pct": 0.28,
-      "pnl_pct": 0.43,
+      "pnl_pct": 0.5,
       "pivots": {
         "pivot": 1480.8,
         "r1": 1491.6,
@@ -227,7 +227,7 @@
         "distance_to_pivot_pct": -0.8
       },
       "entry_time": "2026-10-22T11:01:36.754137+05:30",
-      "last_updated": "2026-10-22T14:15:36.350435+05:30",
+      "last_updated": "2026-10-22T14:16:48.831022+05:30",
       "order_placed": true,
       "quantity": 6,
       "trade_id": "TRD_OI-AI_PIDILITIND_1792647096754",
@@ -239,7 +239,7 @@
       "company": "Punjab National Bank",
       "direction": "LONG",
       "entry_price": 121.83,
-      "current_price": 121.68,
+      "current_price": 121.67,
       "target_price": 123.66,
       "sl_price": 121.1,
       "target_pct": 1.5,
@@ -251,7 +251,7 @@
       "signal_two_min": "LONG -> LONG",
       "oi_rationale": "Persistent Long Accumulation (Double 1-Min Signal: LONG -> LONG, OI Velocity: +176,000)",
       "atr_pct": 0.41,
-      "pnl_pct": -0.12,
+      "pnl_pct": -0.13,
       "pivots": {
         "pivot": 122.6,
         "r1": 123.5,
@@ -272,7 +272,7 @@
         "distance_to_pivot_pct": -0.63
       },
       "entry_time": "2026-10-22T13:21:25.003605+05:30",
-      "last_updated": "2026-10-22T14:15:36.350435+05:30",
+      "last_updated": "2026-10-22T14:16:48.831022+05:30",
       "order_placed": true,
       "quantity": 82,
       "trade_id": "TRD_OI-AI_PNB_1792655485003",
