@@ -37,7 +37,7 @@
       "distance_to_pivot_pct": -0.62
     },
     "entry_time": "2026-10-22T10:07:01.919536+05:30",
-    "last_updated": "2026-10-23T14:26:05.950853+05:30",
+    "last_updated": "2026-10-23T14:27:17.860793+05:30",
     "order_placed": true,
     "quantity": 7,
     "trade_id": "TRD_OI-AI_ICICIBANK_1792643821919",
@@ -51,7 +51,7 @@
     "direction": "NA"
   },
   "market_score": 5.88,
-  "timestamp": "2026-10-23T14:26:05.961603+05:30",
+  "timestamp": "2026-10-23T14:27:17.867314+05:30",
   "total_completed_picks": 18,
   "active_picks": [
     {
@@ -92,7 +92,7 @@
         "distance_to_pivot_pct": -0.62
       },
       "entry_time": "2026-10-22T10:07:01.919536+05:30",
-      "last_updated": "2026-10-23T14:26:05.950853+05:30",
+      "last_updated": "2026-10-23T14:27:17.860793+05:30",
       "order_placed": true,
       "quantity": 7,
       "trade_id": "TRD_OI-AI_ICICIBANK_1792643821919",
@@ -137,7 +137,7 @@
         "distance_to_pivot_pct": -0.58
       },
       "entry_time": "2026-10-22T10:32:59.345651+05:30",
-      "last_updated": "2026-10-23T14:26:05.952103+05:30",
+      "last_updated": "2026-10-23T14:27:17.861398+05:30",
       "order_placed": true,
       "quantity": 26,
       "trade_id": "TRD_OI-AI_INDUSTOWER_1792645379566",
@@ -182,7 +182,7 @@
         "distance_to_pivot_pct": -0.8
       },
       "entry_time": "2026-10-22T11:01:36.754137+05:30",
-      "last_updated": "2026-10-23T14:26:05.952747+05:30",
+      "last_updated": "2026-10-23T14:27:17.861982+05:30",
       "order_placed": true,
       "quantity": 6,
       "trade_id": "TRD_OI-AI_PIDILITIND_1792647096754",
