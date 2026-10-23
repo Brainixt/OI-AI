@@ -37,7 +37,7 @@
       "distance_to_pivot_pct": -3.79
     },
     "entry_time": "2026-10-22T09:22:22.003505+05:30",
-    "last_updated": "2026-10-23T12:21:36.540113+05:30",
+    "last_updated": "2026-10-23T12:22:47.462461+05:30",
     "order_placed": true,
     "quantity": 115,
     "trade_id": "TRD_OI-AI_GMRAIRPORT_1792641142003",
@@ -51,7 +51,7 @@
     "direction": "NA"
   },
   "market_score": 6.28,
-  "timestamp": "2026-10-23T12:21:36.549452+05:30",
+  "timestamp": "2026-10-23T12:22:47.493509+05:30",
   "total_completed_picks": 17,
   "active_picks": [
     {
@@ -92,7 +92,7 @@
         "distance_to_pivot_pct": -3.79
       },
       "entry_time": "2026-10-22T09:22:22.003505+05:30",
-      "last_updated": "2026-10-23T12:21:36.540113+05:30",
+      "last_updated": "2026-10-23T12:22:47.462461+05:30",
       "order_placed": true,
       "quantity": 115,
       "trade_id": "TRD_OI-AI_GMRAIRPORT_1792641142003",
@@ -137,7 +137,7 @@
         "distance_to_pivot_pct": -0.62
       },
       "entry_time": "2026-10-22T10:07:01.919536+05:30",
-      "last_updated": "2026-10-23T12:21:36.541383+05:30",
+      "last_updated": "2026-10-23T12:22:47.465866+05:30",
       "order_placed": true,
       "quantity": 7,
       "trade_id": "TRD_OI-AI_ICICIBANK_1792643821919",
@@ -182,7 +182,7 @@
         "distance_to_pivot_pct": -0.58
       },
       "entry_time": "2026-10-22T10:32:59.345651+05:30",
-      "last_updated": "2026-10-23T12:21:36.542080+05:30",
+      "last_updated": "2026-10-23T12:22:47.467442+05:30",
       "order_placed": true,
       "quantity": 26,
       "trade_id": "TRD_OI-AI_INDUSTOWER_1792645379566",
@@ -227,7 +227,7 @@
         "distance_to_pivot_pct": -0.8
       },
       "entry_time": "2026-10-22T11:01:36.754137+05:30",
-      "last_updated": "2026-10-23T12:21:36.542740+05:30",
+      "last_updated": "2026-10-23T12:22:47.469609+05:30",
       "order_placed": true,
       "quantity": 6,
       "trade_id": "TRD_OI-AI_PIDILITIND_1792647096754",
