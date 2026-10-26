@@ -7,17 +7,17 @@
   },
   "active_pick": null,
   "nifty50": {
-    "price": "22598.6500",
-    "change": "-1.3500",
-    "change_percent": "-0.0100",
+    "price": "22607.7500",
+    "change": "7.7500",
+    "change_percent": "0.0300",
     "direction": "NA"
   },
   "macro_filter": {
     "regime": "NEUTRAL",
     "allowed_direction": "ANY",
-    "rationale": "Macro Index Neutral (NIFTY -0.01%) -> Relative Strength Outperformance Filtered",
-    "updated_at": "2026-10-26T13:06:36.628462+05:30"
+    "rationale": "Macro Index Neutral (NIFTY +0.03%) -> Relative Strength Outperformance Filtered",
+    "updated_at": "2026-10-26T13:11:48.443553+05:30"
   },
-  "market_score": 8.82,
-  "timestamp": "2026-10-26T13:06:36.628462+05:30"
+  "market_score": 8.86,
+  "timestamp": "2026-10-26T13:11:48.443553+05:30"
 }
