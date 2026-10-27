@@ -71,35 +71,80 @@
       <!-- Active Portfolio Cards Grid (Pre-rendered for Zero Loading Flash) -->
       <div class="active-portfolio-grid" id="activeGrid">
         <!-- ACTIVE_PORTFOLIO_PLACEHOLDER -->
-<div class="active-portfolio-card empty-slot">
-  <div class="empty-slot-content">
-    <div class="empty-icon">⏱️</div>
-    <div class="empty-title">Scanning for Slot #1 (SHORT MIS)</div>
-    <div class="empty-desc">5-Min OI Gap | Macro Regime: BEARISH | Score &ge; 88.0</div>
+<div class="active-portfolio-card">
+  <div class="card-top-header">
+    <div class="card-sym-group">
+      <span class="card-slot-badge">#1</span>
+      <span class="card-symbol">FORTIS</span>
+      <span class="badge badge-long">LONG MIS</span>
+      <span class="badge badge-score">OI SCORE 90.2</span>
+    </div>
+    <div class="card-pnl profit">
+      <span class="pnl-lbl">P&amp;L</span>
+      <span class="pnl-val">+0.00%</span>
+    </div>
+  </div>
+
+  <div class="card-company-name">Fortis Healthcare</div>
+
+  <div class="card-metrics-grid">
+    <div class="c-metric">
+      <span class="cm-label">Entry Price</span>
+      <span class="cm-value">₹727.00</span>
+    </div>
+    <div class="c-metric">
+      <span class="cm-label">Live Spot</span>
+      <span class="cm-value highlight">₹727.00</span>
+    </div>
+    <div class="c-metric danger">
+      <span class="cm-label">Dynamic SL (-0.60%)</span>
+      <span class="cm-value">₹722.64</span>
+    </div>
+    <div class="c-metric success">
+      <span class="cm-label">Dynamic Target (+1.50%)</span>
+      <span class="cm-value">₹737.90</span>
+    </div>
+  </div>
+
+  <div class="card-progress-wrap">
+    <div class="card-progress-labels">
+      <span class="lbl-sl">SL: ₹722.64</span>
+      <span class="lbl-curr">Spot: ₹727.00</span>
+      <span class="lbl-tgt">TGT: ₹737.90</span>
+    </div>
+    <div class="card-progress-bar">
+      <div class="card-progress-fill" style="width: 28.6%"></div>
+    </div>
+  </div>
+
+  <div class="card-footer-meta">
+    <span class="meta-tag">R:R 1:2.50</span>
+    <span class="meta-tag">Entry: 2026-10-27 10:32:12</span>
+    <span class="meta-tag status-locked">MIS AUTO-EXIT 15:00 IST</span>
   </div>
 </div><div class="active-portfolio-card empty-slot">
   <div class="empty-slot-content">
     <div class="empty-icon">⏱️</div>
-    <div class="empty-title">Scanning for Slot #2 (SHORT MIS)</div>
-    <div class="empty-desc">5-Min OI Gap | Macro Regime: BEARISH | Score &ge; 88.0</div>
+    <div class="empty-title">Scanning for Slot #2 (ANY MIS)</div>
+    <div class="empty-desc">5-Min OI Gap | Macro Regime: NEUTRAL | Score &ge; 88.0</div>
   </div>
 </div><div class="active-portfolio-card empty-slot">
   <div class="empty-slot-content">
     <div class="empty-icon">⏱️</div>
-    <div class="empty-title">Scanning for Slot #3 (SHORT MIS)</div>
-    <div class="empty-desc">5-Min OI Gap | Macro Regime: BEARISH | Score &ge; 88.0</div>
+    <div class="empty-title">Scanning for Slot #3 (ANY MIS)</div>
+    <div class="empty-desc">5-Min OI Gap | Macro Regime: NEUTRAL | Score &ge; 88.0</div>
   </div>
 </div><div class="active-portfolio-card empty-slot">
   <div class="empty-slot-content">
     <div class="empty-icon">⏱️</div>
-    <div class="empty-title">Scanning for Slot #4 (SHORT MIS)</div>
-    <div class="empty-desc">5-Min OI Gap | Macro Regime: BEARISH | Score &ge; 88.0</div>
+    <div class="empty-title">Scanning for Slot #4 (ANY MIS)</div>
+    <div class="empty-desc">5-Min OI Gap | Macro Regime: NEUTRAL | Score &ge; 88.0</div>
   </div>
 </div><div class="active-portfolio-card empty-slot">
   <div class="empty-slot-content">
     <div class="empty-icon">⏱️</div>
-    <div class="empty-title">Scanning for Slot #5 (SHORT MIS)</div>
-    <div class="empty-desc">5-Min OI Gap | Macro Regime: BEARISH | Score &ge; 88.0</div>
+    <div class="empty-title">Scanning for Slot #5 (ANY MIS)</div>
+    <div class="empty-desc">5-Min OI Gap | Macro Regime: NEUTRAL | Score &ge; 88.0</div>
   </div>
 </div>
 <!-- /ACTIVE_PORTFOLIO_PLACEHOLDER -->
@@ -196,27 +241,119 @@
   <!-- Embedded Initial State for Zero-Loading-Screen Instant Render -->
   <script id="oiStateEmbed">
     window.OI_INITIAL_STATE = {
-  "active_picks": [],
+  "active_picks": [
+    {
+      "symbol": "FORTIS",
+      "company": "Fortis Healthcare",
+      "direction": "LONG",
+      "mode": "MIS",
+      "entry_price": 727.0,
+      "current_price": 727.0,
+      "target_price": 737.9,
+      "sl_price": 722.64,
+      "target_pct": 1.5,
+      "sl_pct": 0.6,
+      "rr_ratio": 2.5,
+      "oi_score": 10.0,
+      "market_score": 9.02,
+      "combined_score": 90.2,
+      "signal_five_min": "SHORT -> LONG",
+      "oi_rationale": "Intra-Cycle Long Buildup Expansion (+6,078,759,985,320,798,208 Contracts, SHORT -> LONG)",
+      "atr_pct": 0.81,
+      "pnl_pct": 0.0,
+      "pivots": {
+        "pivot": 717.67,
+        "r1": 729.93,
+        "s1": 700.63,
+        "r2": 746.97,
+        "s2": 688.37,
+        "r3": 759.23,
+        "s3": 671.33,
+        "r4": 788.53,
+        "s4": 642.03,
+        "high": 734.7,
+        "low": 705.4,
+        "close": 712.9,
+        "bias": "BULLISH",
+        "zone": "P-R1",
+        "nearest_level": "R1",
+        "nearest_level_price": 729.93,
+        "distance_to_pivot_pct": 1.3
+      },
+      "entry_time": "2026-10-27T10:32:12.412035+05:30",
+      "last_updated": "2026-10-27T10:32:12.412035+05:30",
+      "order_placed": true,
+      "quantity": 13,
+      "trade_id": "TRD_OI-AI_LONG_FORTIS_1793077332412",
+      "broker_order_id": "SIM_TRD_OI-AI_LONG_FORTIS_1793077332412",
+      "order_status": "SIMULATED_FILLED"
+    }
+  ],
   "total_completed_picks": 0,
   "sl_lockout": {
     "date": "",
     "symbols": []
   },
-  "active_pick": null,
+  "active_pick": {
+    "symbol": "FORTIS",
+    "company": "Fortis Healthcare",
+    "direction": "LONG",
+    "mode": "MIS",
+    "entry_price": 727.0,
+    "current_price": 727.0,
+    "target_price": 737.9,
+    "sl_price": 722.64,
+    "target_pct": 1.5,
+    "sl_pct": 0.6,
+    "rr_ratio": 2.5,
+    "oi_score": 10.0,
+    "market_score": 9.02,
+    "combined_score": 90.2,
+    "signal_five_min": "SHORT -> LONG",
+    "oi_rationale": "Intra-Cycle Long Buildup Expansion (+6,078,759,985,320,798,208 Contracts, SHORT -> LONG)",
+    "atr_pct": 0.81,
+    "pnl_pct": 0.0,
+    "pivots": {
+      "pivot": 717.67,
+      "r1": 729.93,
+      "s1": 700.63,
+      "r2": 746.97,
+      "s2": 688.37,
+      "r3": 759.23,
+      "s3": 671.33,
+      "r4": 788.53,
+      "s4": 642.03,
+      "high": 734.7,
+      "low": 705.4,
+      "close": 712.9,
+      "bias": "BULLISH",
+      "zone": "P-R1",
+      "nearest_level": "R1",
+      "nearest_level_price": 729.93,
+      "distance_to_pivot_pct": 1.3
+    },
+    "entry_time": "2026-10-27T10:32:12.412035+05:30",
+    "last_updated": "2026-10-27T10:32:12.412035+05:30",
+    "order_placed": true,
+    "quantity": 13,
+    "trade_id": "TRD_OI-AI_LONG_FORTIS_1793077332412",
+    "broker_order_id": "SIM_TRD_OI-AI_LONG_FORTIS_1793077332412",
+    "order_status": "SIMULATED_FILLED"
+  },
   "nifty50": {
-    "price": "22699.4000",
-    "change": "-53.8000",
-    "change_percent": "-0.2400",
+    "price": "22727.1500",
+    "change": "-26.0500",
+    "change_percent": "-0.1100",
     "direction": "NA"
   },
   "macro_filter": {
-    "regime": "BEARISH",
-    "allowed_direction": "SHORT",
-    "rationale": "Macro Index Bearish (NIFTY -0.24%) -> Exclusively SELL (Short MIS) Signals Allowed",
-    "updated_at": "2026-10-27T10:27:01.874692+05:30"
+    "regime": "NEUTRAL",
+    "allowed_direction": "ANY",
+    "rationale": "Macro Index Neutral (NIFTY -0.11%) -> Relative Strength Outperformance Filtered",
+    "updated_at": "2026-10-27T10:32:12.427659+05:30"
   },
-  "market_score": 9.28,
-  "timestamp": "2026-10-27T10:27:01.874692+05:30"
+  "market_score": 9.02,
+  "timestamp": "2026-10-27T10:32:12.427659+05:30"
 };
   </script>
 
