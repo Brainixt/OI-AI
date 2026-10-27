@@ -6,7 +6,7 @@
       "direction": "LONG",
       "mode": "MIS",
       "entry_price": 727.0,
-      "current_price": 734.65,
+      "current_price": 734.5,
       "target_price": 737.9,
       "sl_price": 722.64,
       "target_pct": 1.5,
@@ -18,7 +18,7 @@
       "signal_five_min": "SHORT -> LONG",
       "oi_rationale": "Intra-Cycle Long Buildup Expansion (+6,078,759,985,320,798,208 Contracts, SHORT -> LONG)",
       "atr_pct": 0.81,
-      "pnl_pct": 1.05,
+      "pnl_pct": 1.03,
       "pivots": {
         "pivot": 717.67,
         "r1": 729.93,
@@ -39,7 +39,7 @@
         "distance_to_pivot_pct": 1.3
       },
       "entry_time": "2026-10-27T10:32:12.412035+05:30",
-      "last_updated": "2026-10-27T11:50:07.536095+05:30",
+      "last_updated": "2026-10-27T11:55:19.318468+05:30",
       "order_placed": true,
       "quantity": 13,
       "trade_id": "TRD_OI-AI_LONG_FORTIS_1793077332412",
@@ -58,7 +58,7 @@
     "direction": "LONG",
     "mode": "MIS",
     "entry_price": 727.0,
-    "current_price": 734.65,
+    "current_price": 734.5,
     "target_price": 737.9,
     "sl_price": 722.64,
     "target_pct": 1.5,
@@ -70,7 +70,7 @@
     "signal_five_min": "SHORT -> LONG",
     "oi_rationale": "Intra-Cycle Long Buildup Expansion (+6,078,759,985,320,798,208 Contracts, SHORT -> LONG)",
     "atr_pct": 0.81,
-    "pnl_pct": 1.05,
+    "pnl_pct": 1.03,
     "pivots": {
       "pivot": 717.67,
       "r1": 729.93,
@@ -91,7 +91,7 @@
       "distance_to_pivot_pct": 1.3
     },
     "entry_time": "2026-10-27T10:32:12.412035+05:30",
-    "last_updated": "2026-10-27T11:50:07.536095+05:30",
+    "last_updated": "2026-10-27T11:55:19.318468+05:30",
     "order_placed": true,
     "quantity": 13,
     "trade_id": "TRD_OI-AI_LONG_FORTIS_1793077332412",
@@ -99,8 +99,8 @@
     "order_status": "SIMULATED_FILLED"
   },
   "nifty50": {
-    "price": "22761.8000",
-    "change": "8.6000",
+    "price": "22762.9000",
+    "change": "9.7000",
     "change_percent": "0.0400",
     "direction": "NA"
   },
@@ -108,8 +108,8 @@
     "regime": "NEUTRAL",
     "allowed_direction": "ANY",
     "rationale": "Macro Index Neutral (NIFTY +0.04%) -> Relative Strength Outperformance Filtered",
-    "updated_at": "2026-10-27T11:50:07.539119+05:30"
+    "updated_at": "2026-10-27T11:55:19.318468+05:30"
   },
   "market_score": 8.88,
-  "timestamp": "2026-10-27T11:50:07.539119+05:30"
+  "timestamp": "2026-10-27T11:55:19.318468+05:30"
 }
